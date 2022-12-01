@@ -55,7 +55,7 @@ export default class TodoList extends Vue {
         await this.loadTodos();
     }
 
-    async updateTodo(todo: Todo){
+    async updateTodo(todo: Todo) {
         await this.axios.put(`http://localhost:8000/todos/${todo.id}`, {
             id: todo.id,
             title: todo.title,
@@ -68,5 +68,17 @@ export default class TodoList extends Vue {
         await this.loadTodos();
     }
 
+    async handleDelete(todo: Todo) {
+        await this.axios.delete(`http://localhost:8000/todos/${todo.id}`);
+        ElMessage({
+            message: "Todo Deleted",
+            type: "success",
+        });
+        await this.loadTodos();
+    }
+
+    cancelDelete() {
+        console.log("Delete Aborted!");
+    }
 }
 </script>
