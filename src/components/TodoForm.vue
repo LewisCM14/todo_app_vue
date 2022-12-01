@@ -17,7 +17,7 @@ export default class TodoForm extends Vue{
     formInput = { title: "", completed: false }
 
     onSubmit(){
-        console.log("Todo", this.formInput)
+        this.$emit("send-message", this.formInput)
     }
 }
 </script>
