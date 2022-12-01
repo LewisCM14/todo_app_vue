@@ -4,8 +4,12 @@
             <h1>Todo List</h1>
             <todo-form @send-message="createTodo"></todo-form>
             <el-table :data="todos">
-                <el-table-column prop="title" table="Title" width="350"/>
-                <el-table-column prop="completed" label="Completed" width="200"/>
+                <el-table-column prop="title" table="Title" width="350" />
+                <el-table-column
+                    prop="completed"
+                    label="Completed"
+                    width="200"
+                />
             </el-table>
         </el-col>
     </el-row>
@@ -34,11 +38,15 @@ export default class TodoList extends Vue {
     }
 
     async createTodo(todo: any) {
-        console.log("Todo", todo);
+        await this.axios.post(`http://localhost:8000/todos`, {
+            title: todo.title,
+            completed: todo.completed,
+        });
         ElMessage({
             message: "Todo Created",
             type: "success",
         });
+        await this.loadTodos();
     }
 }
 </script>
