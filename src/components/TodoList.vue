@@ -20,6 +20,12 @@ import { ElMessage } from "element-plus";
 import { Options, Vue } from "vue-class-component";
 import TodoForm from "./TodoForm.vue";
 
+interface Todo {
+    id: number;
+    title: string;
+    completed: boolean;
+}
+
 @Options({
     components: {
         TodoForm,
@@ -48,5 +54,19 @@ export default class TodoList extends Vue {
         });
         await this.loadTodos();
     }
+
+    async updateTodo(todo: Todo){
+        await this.axios.put(`http://localhost:8000/todos/${todo.id}`, {
+            id: todo.id,
+            title: todo.title,
+            completed: todo.completed,
+        });
+        ElMessage({
+            message: "Todo Updated",
+            type: "success",
+        });
+        await this.loadTodos();
+    }
+
 }
 </script>
