@@ -5,11 +5,31 @@
             <todo-form @send-message="createTodo"></todo-form>
             <el-table :data="todos">
                 <el-table-column prop="title" table="Title" width="350" />
-                <el-table-column
-                    prop="completed"
-                    label="Completed"
-                    width="200"
-                />
+                <el-table-column fixed="right" label="Operations" width="200">
+                    <template #default="scope">
+                        <el-space wrap>
+                            <el-switch
+                                v-model="scope.row.completed"
+                                @click="updateTodo(scope.row)"
+                            />
+                            <el-popconfirm
+                                confirm-button-text="Yes"
+                                confirm-button-test="No"
+                                icon="el-icon-info"
+                                icon-color="red"
+                                title="Confirm Delete?"
+                                @confirm="handleDelete(scope.row)"
+                                @cancel="cancelDelete"
+                            >
+                            <template #reference>
+                                <el-button size="mini" type="danger">
+                                    Delete
+                                </el-button>
+                            </template>
+                            </el-popconfirm>
+                        </el-space>
+                    </template>
+                </el-table-column>
             </el-table>
         </el-col>
     </el-row>
